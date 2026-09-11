@@ -23,13 +23,16 @@ public class User {
             throw new ValidationException("Email darf nicht leer sein.");
         }
         if (!EMAIL_PATTERN.matcher(email).matches()) {
-            throw new ValidationException("Ungültiges Mail-Format:");
+            throw new ValidationException("Ungültiges Mail-Format.");
         }
         if (geburtstag.isAfter(LocalDate.now())) {
             throw new ValidationException("Geburtstag darf nicht später wie heute sein.");
         }
+        if (LocalDate.now().minusYears(99).isAfter(geburtstag)) {
+            throw new ValidationException("Benutzer darf nicht älter als 99 Jahre alt sein.");
+        }
         if (geburtstag.plusYears(14).isAfter(LocalDate.now())) {
-            throw new ValidationException("Benutzer muss mindestens 14 Jahre alt sein");
+            throw new ValidationException("Benutzer muss mindestens 14 Jahre alt sein.");
         }
        
         
