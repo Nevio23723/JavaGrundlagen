@@ -1,14 +1,18 @@
-package GymSim;
+package gymsim;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        User user = new User("Weishaupt", "Nevio", LocalDate.of(2008, 07, 23));
-        Membership membership = new Membership(user);
+        try {
+        User user = new User("Weishaupt ", "Nevio", LocalDate.of(2008, 07, 23));
+        System.out.println("User erfolgreich erstellt: " + user.getUsername());
+        } catch (ValidationException e) {
+            System.out.println("Fehler beim Erstellen des Benutzers: " + e.getMessage());
+        }
+        
 
-
-        System.out.println(membership.toString());
+        
         
     }
 }

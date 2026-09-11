@@ -1,4 +1,4 @@
-package GymSim;
+package gymsim;
 
 import java.time.LocalDate;
 
@@ -37,6 +37,10 @@ public class User {
 
     public String toString() {
         return "Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
+    }
+
+    public String getUsername() {
+        return vorname + " " + name;
     }
 
     

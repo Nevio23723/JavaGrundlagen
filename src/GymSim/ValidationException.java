@@ -1,4 +1,4 @@
-package GymSim;
+package gymsim;
 public class ValidationException extends RuntimeException{
     public ValidationException(String message) {
         super(message);

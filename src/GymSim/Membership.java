@@ -1,4 +1,4 @@
-package GymSim;
+package gymsim;
 
 public class Membership {
     User user;
