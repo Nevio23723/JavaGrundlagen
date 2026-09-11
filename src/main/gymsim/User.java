@@ -1,20 +1,34 @@
-package gymsim;
+package main.gymsim;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 
 public class User {
+    private static final String NAME_DARF_NICHT_LEER_SEIN = "Name darf nicht leer sein.";
     String name;
     String vorname;
     LocalDate geburtstag;
     String email;
+    UUID id;
     
 
     
     public User(String name, String vorname, LocalDate geburtstag, String email) {
+        this.name = name;
+        this.vorname = vorname;
+        this.geburtstag = geburtstag;
+        this.email = email.trim().toLowerCase();
+        this.id = UUID.randomUUID();
+
+        validate(this.name, this.vorname, this.geburtstag, this.email, this.id);
+
+    }
+
+    private void validate(String name, String vorname, LocalDate geburtstag, String email, UUID id) {
         if (name.isBlank()) {
-            throw new ValidationException("Name darf nicht leer sein.");
+            throw new ValidationException(NAME_DARF_NICHT_LEER_SEIN);
         }
         if (vorname.isBlank()) {
             throw new ValidationException("Vorname darf nicht leer sein.");
@@ -34,32 +48,29 @@ public class User {
         if (geburtstag.plusYears(14).isAfter(LocalDate.now())) {
             throw new ValidationException("Benutzer muss mindestens 14 Jahre alt sein.");
         }
-       
-        
-
-
-        this.name = name;
-        this.vorname = vorname;
-        this.geburtstag = geburtstag;
-        this.email = email.trim().toLowerCase();
+        if (!UUID_REGEX.matcher(id.toString()).matches()) {
+            throw new ValidationException("ID muss von typ UUID sein.");
+        }
     }
 
     public String toString() {
-        return "Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
+        return "Id: " + id + ", Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
     }
 
     public String getUsername() {
         return vorname + " " + name;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    
+
     private static final Pattern EMAIL_PATTERN =
         Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
-
-
-    
-
-
-    
-
+    private static final Pattern UUID_REGEX =
+        Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 }
+
