@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 
 public class User {
-    private static final String NAME_DARF_NICHT_LEER_SEIN = "Name darf nicht leer sein.";
+    public static final String NAME_DARF_NICHT_LEER_SEIN = "Name darf nicht leer sein.";
     String name;
     String vorname;
     LocalDate geburtstag;
@@ -61,9 +61,11 @@ public class User {
         return vorname + " " + name;
     }
 
-    public String getName() {
-        return this.name;
-    }
+    public LocalDate getDateOfBirth() { return geburtstag; }
+
+    public UUID getId() { return id; }
+
+    public String getEmail() { return email; }
 
     
 
