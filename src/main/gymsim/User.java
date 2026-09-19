@@ -1,6 +1,7 @@
 package main.gymsim;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,8 @@ public class User {
     LocalDate geburtstag;
     String email;
     UUID id;
+    Membership membership;
+
     
 
     
@@ -22,9 +25,18 @@ public class User {
         this.email = email.trim().toLowerCase();
         this.id = UUID.randomUUID();
 
+
         validate(this.name, this.vorname, this.geburtstag, this.email, this.id);
 
+        int age = Period.between(this.geburtstag, LocalDate.now()).getYears();
+
+        if (age < 14) {
+            this.membership = new Membership(this, MembershipStatus.PENDING_UNDERAGE);
+        } else {
+            this.membership = new Membership(this, MembershipStatus.ACTIVE);
+        }
     }
+
 
     private void validate(String name, String vorname, LocalDate geburtstag, String email, UUID id) {
         if (name.isBlank()) {
@@ -45,8 +57,8 @@ public class User {
         if (LocalDate.now().minusYears(99).isAfter(geburtstag)) {
             throw new ValidationException("Benutzer darf nicht älter als 99 Jahre alt sein.");
         }
-        if (geburtstag.plusYears(14).isAfter(LocalDate.now())) {
-            throw new ValidationException("Benutzer muss mindestens 14 Jahre alt sein.");
+        if (geburtstag.plusYears(13).isAfter(LocalDate.now())) {
+            throw new ValidationException("Benutzer muss mindestens 13 Jahre alt sein.");
         }
         if (!UUID_REGEX.matcher(id.toString()).matches()) {
             throw new ValidationException("ID muss von typ UUID sein.");
@@ -67,7 +79,8 @@ public class User {
 
     public String getEmail() { return email; }
 
-    
+    public Membership getMembership() { return membership; }
+
 
     private static final Pattern EMAIL_PATTERN =
         Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");

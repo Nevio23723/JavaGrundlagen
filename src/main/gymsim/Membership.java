@@ -17,9 +17,6 @@ public class Membership {
         return user.toString() + ", " + membershipStatus;
     }
 
-    public MembershipStatus getStatus() {
-        return membershipStatus;
-    }
 
     public void pause() {
         this.membershipStatus = MembershipStatus.PAUSED;
@@ -28,6 +25,8 @@ public class Membership {
     public void cancel() {
         this.membershipStatus = MembershipStatus.CANCELLED;
     }
+
+    public MembershipStatus getMembershipStatus() {return membershipStatus; }
 
 
 
