@@ -1,5 +1,7 @@
 package main.gymsim;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 public class Membership {
@@ -10,10 +12,17 @@ public class Membership {
     public static final int UNDERAGE_THRESHOLD = 14;
     public static final int MAX_AGE = 99;
 
-    public Membership(User user, MembershipStatus status) {
+    public Membership(User user) {
         this.id = UUID.randomUUID();
         this.user = user;
-        this.membershipStatus = status;
+
+        int age = Period.between(user.getDateOfBirth(), LocalDate.now()).getYears();
+
+        if (age < Membership.UNDERAGE_THRESHOLD) {
+            membershipStatus = MembershipStatus.PENDING_UNDERAGE;
+        } else {
+            membershipStatus = MembershipStatus.ACTIVE;
+        }
     }
 
 
@@ -33,6 +42,8 @@ public class Membership {
     public MembershipStatus getMembershipStatus() {
         return membershipStatus; 
     }
+
+    
 
 
 

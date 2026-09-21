@@ -1,7 +1,6 @@
 package main.gymsim;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -14,7 +13,7 @@ public class User {
     private final LocalDate geburtstag;
     private final String email;
     private final UUID id;
-    private final Membership membership;
+    
 
     
 
@@ -28,14 +27,6 @@ public class User {
 
 
         validate(this.name, this.vorname, this.geburtstag, this.email, this.id);
-
-        int age = Period.between(this.geburtstag, LocalDate.now()).getYears();
-
-        if (age < Membership.UNDERAGE_THRESHOLD) {
-            this.membership = new Membership(this, MembershipStatus.PENDING_UNDERAGE);
-        } else {
-            this.membership = new Membership(this, MembershipStatus.ACTIVE);
-        }
     }
 
 
@@ -86,9 +77,9 @@ public class User {
         return email; 
     }
 
-    public Membership getMembership() { 
-        return membership; 
-    }
+    
+
+
 
 
     private static final Pattern EMAIL_PATTERN =
