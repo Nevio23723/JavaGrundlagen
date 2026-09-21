@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 
 
 public class User {
-    public static final String NAME_DARF_NICHT_LEER_SEIN = "Name darf nicht leer sein.";
+    
+
     String name;
     String vorname;
     LocalDate geburtstag;
@@ -30,7 +31,7 @@ public class User {
 
         int age = Period.between(this.geburtstag, LocalDate.now()).getYears();
 
-        if (age < 14) {
+        if (age < Membership.UNDERAGE_THRESHOLD) {
             this.membership = new Membership(this, MembershipStatus.PENDING_UNDERAGE);
         } else {
             this.membership = new Membership(this, MembershipStatus.ACTIVE);
@@ -40,28 +41,28 @@ public class User {
 
     private void validate(String name, String vorname, LocalDate geburtstag, String email, UUID id) {
         if (name.isBlank()) {
-            throw new ValidationException(NAME_DARF_NICHT_LEER_SEIN);
+            throw new ValidationException(ValidationExceptionMsg.NAME_NICHT_BLANK);
         }
         if (vorname.isBlank()) {
-            throw new ValidationException("Vorname darf nicht leer sein.");
+            throw new ValidationException(ValidationExceptionMsg.VORNAME_NICHT_BLANK);
         }
         if (email.isBlank()) {
-            throw new ValidationException("Email darf nicht leer sein.");
+            throw new ValidationException(ValidationExceptionMsg.EMAIL_NICHT_BLANK);
         }
         if (!EMAIL_PATTERN.matcher(email).matches()) {
-            throw new ValidationException("Ungültiges Mail-Format.");
+            throw new ValidationException(ValidationExceptionMsg.UNGUELTIGES__MAIL_FORMAT);
         }
         if (geburtstag.isAfter(LocalDate.now())) {
-            throw new ValidationException("Geburtstag darf nicht später wie heute sein.");
+            throw new ValidationException(ValidationExceptionMsg.GEBURTSTAG_NICHT_NACH_HEUTE);
         }
         if (LocalDate.now().minusYears(99).isAfter(geburtstag)) {
-            throw new ValidationException("Benutzer darf nicht älter als 99 Jahre alt sein.");
+            throw new ValidationException(ValidationExceptionMsg.USER_UNTER_99);
         }
         if (geburtstag.plusYears(13).isAfter(LocalDate.now())) {
-            throw new ValidationException("Benutzer muss mindestens 13 Jahre alt sein.");
+            throw new ValidationException(ValidationExceptionMsg.USER_MIN_13);
         }
         if (!UUID_REGEX.matcher(id.toString()).matches()) {
-            throw new ValidationException("ID muss von typ UUID sein.");
+            throw new ValidationException(ValidationExceptionMsg.ID_MUSS_VON_TYP_UUID_SEIN);
         }
     }
 

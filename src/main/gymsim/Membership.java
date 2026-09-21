@@ -6,6 +6,9 @@ public class Membership {
     User user;
     MembershipStatus membershipStatus;
     UUID id;
+    public static final int MIN_AGE = 13;
+    public static final int UNDERAGE_THRESHOLD = 14;
+    public static final int MAX_AGE = 99;
 
     public Membership(User user, MembershipStatus status) {
         this.id = UUID.randomUUID();
