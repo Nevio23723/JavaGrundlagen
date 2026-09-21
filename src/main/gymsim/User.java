@@ -9,12 +9,12 @@ import java.util.regex.Pattern;
 public class User {
     
 
-    String name;
-    String vorname;
-    LocalDate geburtstag;
-    String email;
-    UUID id;
-    Membership membership;
+    private final String name;
+    private final String vorname;
+    private final LocalDate geburtstag;
+    private final String email;
+    private final UUID id;
+    private final Membership membership;
 
     
 
@@ -74,13 +74,21 @@ public class User {
         return vorname + " " + name;
     }
 
-    public LocalDate getDateOfBirth() { return geburtstag; }
+    public LocalDate getDateOfBirth() { 
+        return geburtstag; 
+    }
 
-    public UUID getId() { return id; }
+    public UUID getId() { 
+        return id; 
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() { 
+        return email; 
+    }
 
-    public Membership getMembership() { return membership; }
+    public Membership getMembership() { 
+        return membership; 
+    }
 
 
     private static final Pattern EMAIL_PATTERN =

@@ -5,7 +5,7 @@ import java.util.UUID;
 public class Membership {
     User user;
     MembershipStatus membershipStatus;
-    UUID id;
+    private final UUID id;
     public static final int MIN_AGE = 13;
     public static final int UNDERAGE_THRESHOLD = 14;
     public static final int MAX_AGE = 99;
@@ -16,10 +16,11 @@ public class Membership {
         this.membershipStatus = status;
     }
 
-    public String toString() {
-        return user.toString() + ", " + membershipStatus;
-    }
 
+
+    public String toString() {
+        return user.toString() + ", " + user.getId() + ", " + membershipStatus;
+    }
 
     public void pause() {
         this.membershipStatus = MembershipStatus.PAUSED;
@@ -29,7 +30,9 @@ public class Membership {
         this.membershipStatus = MembershipStatus.CANCELLED;
     }
 
-    public MembershipStatus getMembershipStatus() {return membershipStatus; }
+    public MembershipStatus getMembershipStatus() {
+        return membershipStatus; 
+    }
 
 
 
