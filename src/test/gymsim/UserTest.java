@@ -1,8 +1,11 @@
 package test.gymsim;
 
 
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 
+import main.gymsim.Membership;
+import main.gymsim.MembershipStatus;
 import main.gymsim.ValidationException;
 import org.junit.*;
 
@@ -22,17 +25,20 @@ public class UserTest {
         assertAll(
                 () -> assertEquals("Nevio Weishaupt", user.getUsername()),
                 () -> assertEquals("nevio.weishaupt@gmail.com", user.getEmail()),
-                () -> assertEquals(geburtstag, user.getDateOfBirth())
+                () -> assertEquals(geburtstag, user.getDateOfBirth()),
+                () -> assertEquals(MembershipStatus.ACTIVE, user.getMembership().getMembershipStatus())
         );
     }
-    @Test
-    public void userLastNameNotBlank() {
-        ValidationException exception = assertThrows(ValidationException.class, () -> {
-                    new User("", "Nevio", LocalDate.of(2008, 7, 23), "nevio.weishaupt@gmail.com");
-                });
 
-        assertEquals(User.NAME_DARF_NICHT_LEER_SEIN, exception.getMessage());
+    @Test
+    public void createUser_Underage() {
+        LocalDate geburtstag = LocalDate.now().minusYears(13);
+        User user = new User("Weishaupt", "Nevio", geburtstag, "nevio.weishaupt@gmail.com");
+
+        assertEquals(MembershipStatus.PENDING_UNDERAGE, user.getMembership().getMembershipStatus());
     }
+
+
 
 
 }

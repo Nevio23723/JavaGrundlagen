@@ -16,11 +16,11 @@
 Whenever a member attempts to check in at a facility scanner or turnstile, the system evaluates the membership status and returns an access decision:
 
 - **GRANTED**: Access immediately.
-    - *Applicable Statuses*: `ACTIVE`, `CANCELLED` (while within end date).
+  - *Applicable Statuses*: `ACTIVE`, `CANCELLED` (while within end date).
 - **GRANTED_WITH_WARNING**: Access, but the terminal shows a notice.
-    - *Applicable Status*: `PENDING_MEDICAL_CLEARANCE` (reminder to submit clearance).
+  - *Applicable Status*: `PENDING_MEDICAL_CLEARANCE` (reminder to submit clearance).
 - **DENIED**: No access; terminal shows the reason and redirects to staff.
-    - *Applicable Statuses*: `PENDING_UNDERAGE`, `PAUSED`, `EXPIRED`.
+  - *Applicable Statuses*: `PENDING_UNDERAGE`, `PAUSED`, `EXPIRED`.
 
 ---
 
@@ -33,8 +33,8 @@ Users under 14 years old cannot train yet, but their registrration is captured e
 - **Account Creation**: The user account and contract are created with status **PENDING_UNDERAGE**.
 - **Activation**: On the user's 14th birthday, the status automatically switches to **ACTIVE**, and the running membership officially begins.
 - **Facility Access Behavior**:
-    - Result: **DENIED**.
-    - Message: *"Access denied: Membership activates on your 14th birthday."*
+  - Result: **DENIED**.
+  - Message: *"Access denied: Membership activates on your 14th birthday."*
 
 ---
 
@@ -47,18 +47,18 @@ To ensure safety and reduce liability, members turning 99 must provide a valid m
 ### Process & Notifications
 
 - **30 Days Before 99th Birthday**:
-    - The member receives an automated **email** (and an optional **SMS alert**) requesting a medical clearance certificate.
-    - Status switches from **ACTIVE** to **PENDING_MEDICAL_CLEARANCE**.
+  - The member receives an automated **email** (and an optional **SMS alert**) requesting a medical clearance certificate.
+  - Status switches from **ACTIVE** to **PENDING_MEDICAL_CLEARANCE**.
 - **Submission of Clearance**:
-    - Once a valid clearance is approved in the system, status reverts to **ACTIVE**.
+  - Once a valid clearance is approved in the system, status reverts to **ACTIVE**.
 - **Deadline Reached (99th Birthday)**:
-    - If no certificate is logged by the 99th birthday, the membership automatically changes to **PAUSED**.
+  - If no certificate is logged by the 99th birthday, the membership automatically changes to **PAUSED**.
 
 ### Facility Access Behavior
 
 - **During Grace Period (PENDING_MEDICAL_CLEARANCE)**:
-    - Result: **GRANTED_WITH_WARNING**.
-    - Message: *"Notice: Please submit your medical clearance before your 99th birthday."*
+  - Result: **GRANTED_WITH_WARNING**.
+  - Message: *"Notice: Please submit your medical clearance before your 99th birthday."*
 - **After Deadline without Clearance (PAUSED)**:
-    - Result: **DENIED**.
-    - Message: *"Access denied: Medical clearance required. Please contact the front desk."*
+  - Result: **DENIED**.
+  - Message: *"Access denied: Medical clearance required. Please contact the front desk."*
