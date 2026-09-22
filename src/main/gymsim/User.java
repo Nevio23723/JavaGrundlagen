@@ -13,6 +13,7 @@ public class User {
     private final LocalDate geburtstag;
     private final String email;
     private final UUID id;
+    private Membership membership;
     
 
     
@@ -58,24 +59,34 @@ public class User {
     }
 
     public String toString() {
-        return "Id: " + id + ", Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
+        return "User ID: " + id + ", Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
     }
 
     public String getUsername() {
+
         return vorname + " " + name;
     }
 
     public LocalDate getDateOfBirth() { 
-        return geburtstag; 
+
+        return geburtstag;
     }
 
     public UUID getId() { 
-        return id; 
+
+        return id;
     }
 
     public String getEmail() { 
-        return email; 
+
+        return email;
     }
+
+    public Membership getMembership() {
+        return membership;
+    }
+
+
 
     
 
@@ -87,5 +98,7 @@ public class User {
 
     private static final Pattern UUID_REGEX =
         Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+
+
 }
 
