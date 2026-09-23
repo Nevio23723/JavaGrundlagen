@@ -13,19 +13,20 @@ public class User {
     private final LocalDate geburtstag;
     private final String email;
     private final UUID id;
-    private Membership membership;
-    
+    private final Membership membership;
 
-    
 
-    
+
+
+
+
     public User(String name, String vorname, LocalDate geburtstag, String email) {
         this.name = name;
         this.vorname = vorname;
         this.geburtstag = geburtstag;
         this.email = email.trim().toLowerCase();
         this.id = UUID.randomUUID();
-
+        this.membership = new Membership(this);
 
         validate(this.name, this.vorname, this.geburtstag, this.email, this.id);
     }
@@ -47,10 +48,10 @@ public class User {
         if (geburtstag.isAfter(LocalDate.now())) {
             throw new ValidationException(ValidationExceptionMsg.GEBURTSTAG_NICHT_NACH_HEUTE);
         }
-        if (LocalDate.now().minusYears(99).isAfter(geburtstag)) {
+        if (LocalDate.now().minusYears(120).isAfter(geburtstag)) {
             throw new ValidationException(ValidationExceptionMsg.USER_UNTER_99);
         }
-        if (geburtstag.plusYears(13).isAfter(LocalDate.now())) {
+        if (geburtstag.plusYears(12).isAfter(LocalDate.now())) {
             throw new ValidationException(ValidationExceptionMsg.USER_MIN_13);
         }
         if (!UUID_REGEX.matcher(id.toString()).matches()) {
@@ -83,9 +84,13 @@ public class User {
     }
 
     public Membership getMembership() {
+
         return membership;
     }
 
+    public MembershipStatus getMembershipStatus() {
+        return this.membership.getMembershipStatus();
+    }
 
 
     

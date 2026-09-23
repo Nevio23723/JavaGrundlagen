@@ -31,11 +31,19 @@ public class UserTest {
     }
 
     @Test
-    public void createUser_Underage() {
+    public void createUser_Pending_Underage() {
         LocalDate geburtstag = LocalDate.now().minusYears(13);
         User user = new User("Weishaupt", "Nevio", geburtstag, "nevio.weishaupt@gmail.com");
 
-        assertEquals(MembershipStatus.PENDING_UNDERAGE, user.getMembership().getMembershipStatus());
+        assertEquals(MembershipStatus.PENDING_UNDERAGE, user.getMembershipStatus());
+    }
+
+    @Test
+    public void createUser_Awaiting_Clearance() {
+        LocalDate geburtstag = LocalDate.now().minusYears(90);
+        User user = new User("Weishaupt", "Nevio", geburtstag, "nevio.weishaupt@gmail.com");
+
+        assertEquals(MembershipStatus.AWAITING_MEDICAL_CLEARANCE, user.getMembershipStatus());
     }
 
 
