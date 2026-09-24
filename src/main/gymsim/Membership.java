@@ -10,7 +10,7 @@ public class Membership {
     private final UUID id;
     public static final int MIN_AGE = 13;
     public static final int UNDERAGE_THRESHOLD = 14;
-    public static final int MAX_AGE = 99;
+    public static final int MAX_AGE = 90;
 
     public Membership(User user) {
         this.id = UUID.randomUUID();
@@ -20,7 +20,7 @@ public class Membership {
 
         if (age < Membership.UNDERAGE_THRESHOLD) {
             membershipStatus = MembershipStatus.PENDING_UNDERAGE;
-        } else if (age > MAX_AGE) {
+        } else if (age >= MAX_AGE) {
             membershipStatus = MembershipStatus.AWAITING_MEDICAL_CLEARANCE;
         } else {
             membershipStatus = MembershipStatus.ACTIVE;
