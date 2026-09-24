@@ -9,7 +9,7 @@ public class Main {
         //System.out.println(user);
 
         Membership membership = new Membership(user);
-        System.out.println(membership);
+        System.out.println(user.getMembershipStatus());
 
         } catch (ValidationException e) {
             System.out.println("Fehler beim Erstellen des Benutzers: " + e.getMessage());

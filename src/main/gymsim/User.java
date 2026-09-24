@@ -13,8 +13,7 @@ public class User {
     private final LocalDate geburtstag;
     private final String email;
     private final UUID id;
-    private final Membership membership;
-
+    private Membership membership;
 
 
 
@@ -26,7 +25,6 @@ public class User {
         this.geburtstag = geburtstag;
         this.email = email.trim().toLowerCase();
         this.id = UUID.randomUUID();
-        this.membership = new Membership(this);
 
         validate(this.name, this.vorname, this.geburtstag, this.email, this.id);
     }
@@ -59,6 +57,10 @@ public class User {
         }
     }
 
+
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
     public String toString() {
         return "User ID: " + id + ", Vorname: " + vorname + ", Name: " + name + ", Geburtsdatum: " + geburtstag;
     }
@@ -84,12 +86,11 @@ public class User {
     }
 
     public Membership getMembership() {
-
         return membership;
     }
 
     public MembershipStatus getMembershipStatus() {
-        return this.membership.getMembershipStatus();
+        return membership.getMembershipStatus();
     }
 
 

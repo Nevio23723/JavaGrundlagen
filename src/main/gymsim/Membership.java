@@ -16,6 +16,9 @@ public class Membership {
         this.id = UUID.randomUUID();
         this.user = user;
 
+        // Hier wird DIESE Membership dem user übergeben
+        this.user.setMembership(this);
+
         int age = Period.between(user.getDateOfBirth(), LocalDate.now()).getYears();
 
         if (age < Membership.UNDERAGE_THRESHOLD) {
